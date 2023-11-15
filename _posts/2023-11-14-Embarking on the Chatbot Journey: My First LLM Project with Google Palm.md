@@ -3,7 +3,6 @@ title: "Embarking on the Chatbot Journey: My First LLM Project with Google Palm"
 date: 2023-11-14
 ---
 
-# Embarking on the Chatbot Journey: My First LLM Project with Google Palm
 
 ## Introduction
 

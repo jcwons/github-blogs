@@ -1,9 +1,8 @@
 ---
-title: "Taxis"
+title: "NYC Taxi Insights: Unraveling Patterns and Optimization Strategies"
 date: 2023-11-15
 ---
 
-# Unveiling the Road to Success: A Data Science Odyssey with NYC Taxi Fare Dataset
 
 ## Introduction
 

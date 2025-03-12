@@ -1,5 +1,5 @@
 ---
-title: "The Physics behind drying your clothes"
+title: "The Physics behind drying clothes"
 date: 2025-03-20
 ---
 

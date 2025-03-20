@@ -32,7 +32,7 @@ We don't have much control over the third effect, so we use simplifying assumpti
 
 So let's look at a couple of simulations to get a better understanding.
 
-![alt-text](./img/cloth_drying/simulation.gif)
+![alt text](./img/cloth_drying/simulation.gif)
 
 
 Our shirt is represented by a the point in the middle. It releases water into its surroundings leading to an increase in the humidity. The additional moisture is then transported away slowly via diffusions. There are 3 different scenarios. The scenario on the left and in the middle demonstrate the impact of the relative humidity of the surrounding air. The higher the humidity, the slower moisture can be transported away. The evaporation of the shirt stops when the air right next to the shirt reaches 100% relative humidity. There is no space for further water in the air until the water is diffused away. We can see that the shirt dries slower on the left due to the higher humidity.

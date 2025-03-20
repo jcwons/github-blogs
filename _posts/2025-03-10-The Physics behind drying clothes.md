@@ -14,7 +14,7 @@ When we say that the temperature in a room is 20°C this means that the particle
 
 Now, the particles don't all move at the same speed. Through collisions with other particles, they exchange energy and their speed changes. The energy of the particles quickly follows the Maxwell-Boltzmann distribution as shown in the figure below. There are some particles at low speeds, then there will be one speed that is most commonly found among the particles. This speed can be used to determine the temperature of the gas. The important part is that there is also a small fraction of particles with high speeds. Even at very high speeds, the possibility of finding a particle with that speed is close to 0, but not exactly zero. The particles with high speeds are what make evaporation possible.
 
-![Maxwell-Boltzmann Distribution]({{ site.baseurl }}/docs/assets/dry_cloths/Maxwell.png)
+![Maxwell-Boltzmann Distribution](../docs/assets/dry_cloths/Maxwell.png)
 
 Turning from air now to a wet shirt. The water particles in the shirt can be described similarly to the air particles, i.e., there are particles with lower energy and those with higher energy. The important bit is that some water particles have enough energy to break free from the shirt into the surroundings. This process is evaporation. From the Maxwell-Boltzmann distribution, we can already see that the evaporation chance or evaporation rate is higher at higher temperatures because more water particles have enough energy to break free. Once these high-energy particles leave the shirt, the average energy of the remaining water particles are smaller. After some bouncing around, their distribution will readjust to a Maxwell-Boltzmann distribution of lower energy. In other words, the shirt cools due to evaporation.
 
@@ -32,7 +32,7 @@ We don't have much control over the third effect, so we use simplifying assumpti
 
 So let's look at a couple of simulations to get a better understanding.
 
-![Alt Text]({{ site.baseurl }}/docs/assets/dry_cloths//animation.gif)
+![Alt Text](../docs/assets/dry_cloths//animation.gif)
 
 
 Our shirt is represented by a the point in the middle. It releases water into its surroundings leading to an increase in the humidity. The additional moisture is then transported away slowly via diffusions. There are 3 different scenarios. The scenario on the left and in the middle demonstrate the impact of the relative humidity of the surrounding air. The higher the humidity, the slower moisture can be transported away. The evaporation of the shirt stops when the air right next to the shirt reaches 100% relative humidity. There is no space for further water in the air until the water is diffused away. We can see that the shirt dries slower on the left due to the higher humidity.
@@ -41,7 +41,7 @@ On the right, we simulated the effect of wind. Wind causes the water in the air 
 
 From this little simulation, we learnt that the drying speed of the cloth is limited either by the diffusion speed or the evaporation speed. If it is limited by the diffusion speed (e.g. no wind), then even increasing the evaporation speed does not help. We need to get rid of the moisture in the air. On the other hand, if the evaporation speed is limiting the drying process, then we can speed up the drying process by heating the clothes.
 
-![image]({{ site.baseurl }}/docs/assets/dry_cloths/Moisture_in_shirt.png)
+![image](../assets/dry_cloths/Moisture_in_shirt.png)
 
 We can see these limits clearly in the plot above where the moisture in the shirt is shown against drying time. For high humidity and the standard case, the drying process starts of in the evaporation limited regime where the drying speed only depends on the evaporation rate. Once the surrounding fills with moisture and reaches 100% relative humidity, the drying process becomes limited by diffusion. At higher ambient relative humidity this happens faster.
 
@@ -52,7 +52,7 @@ If there is a strong enough wind present, we see a straight line because water i
 
 There is one point, we neglected so far and that is surface area. Normally, you would fold your shirt in half and hang it on the line. This cuts the surface area of the shirt exposed to air in half. If you are in the possession of clothing pegs, you can the shirt from the bottom and keep the whole surface exposed to air.
 
-![Alt text]({{ site.baseurl }}/docs/assets/dry_cloths/animation_2D.gif)
+![Alt text](../docs/assets/dry_cloths/animation_2D.gif)
 
 I suspect that the drying speed should be proportional to the surface area exposed to air. So, after upgrading our 1D simulation to 2D, I was able to confirm this. On the right, you can see the same simulation as above, but this time in 2D. The shirt is hung along the y-axis. On the left, I plotted the drying time against the length of the shirt while keeping all other parameters constant. First, I did this for the case with wind. We see a perfectly straight line on a log-log scale which verifies that the drying speed is proportional to 1/length. 
 

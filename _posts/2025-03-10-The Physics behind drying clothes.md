@@ -5,58 +5,63 @@ date: 2025-03-10
 
 
 ## Introduction
-Ever wondered how your washed clothes are drying and why water evaporates at temperatures way below 100°C? If yes, then you are in the right place because I will explain the physics behind these effects.
+How long does it take for my clothes to dry outside? Actually, why are they drying when water only boils at 100°C? The answer to the second question is rather simple once you understand what temperature actually is.
 
-To answer these questions, we need to understand what temperature is. Then, with some basic physics concepts, we are equipped to answer these questions and more.
+Let's start with temperature. To understand it better, I will introduce what is called the kinetic theory of gases. When looking at gases or fluids, we view them as an ensemble of their particles. We can imagine these particles as tiny round balls that move around and bounce off each other. The temperature of air is then given by the speed (or kinetic energy) of these particles. At higher temperatures, the particles move faster and at lower temperatures they move slower.
+When we say that the temperature in a room is 20°C this means that the particles in the air have a certain amount of kinetic energy, or in other words, they move at a certain speed. This way of describing temperature is called the kinetic theory of gases in which many attributes of the air can be derived by looking at the gas particles in the air. 
 
-Let's start with temperature. When we say that the temperature in a room is 20°C this means the particles in the air have a certain amount of kinetic energy, or in other words, they move at a certain speed. This way of describing temperature is called the kinetic theory of gases in which many attributes of the air can be derived by looking at the gas particles in the air. 
+## The Physics: Kinetic Theory for Gas and Fluids
 
-So coming back to the temperature, for simplicity, we assume that our room is only filled with 1 type of gas, let's say oxygen. The speed at which the oxygen moves around determines the temperature of the particles. The particles inside the room are constantly bouncing off each other and exchanging energy. Some particles will be fast and some will be slower. If the particles are left alone for some time, they establish an equilibrium where their energy distribution follows what we call the Maxwell-Boltzmann distribution as shown below. The temperature of the gas is then related to the most common speed/energy of the particles.
+Now, the particles don't all move at the same speed. Through collisions with other particles, they exchange energy and their speed changes. The energy of the particles quickly follows the Maxwell-Boltzmann distribution as shown in the figure below. There are some particles at low speeds, then there will be one speed that is most commonly found among the particles. This speed can be used to determine the temperature of the gas. The important part is that there is also a small fraction of particles with high speeds. Even at very high speeds, the possibility of finding a particle with that speed is close to 0, but not exactly zero. The particles with high speeds are what make evaporation possible.
 
 # Image of Maxwell distribution double
 
-What is going to be important for the evaporation of water is that for a given temperature, there are very few high-energy particles. The distribution function is small, but not zero at high energies. If we now turn to our shirts that are drying by releasing water into the surrounding air, we can understand why they dry at everyday temperatures. If the water particles in the shirt have a high enough energy, then they can break free from the shirt and escape into the air. I highlighted in red the escape energy required for the water particles in the shirt to escape. Even at 20°C, some particles have enough energy to escape.
+Turning from air now to a wet shirt. The water particles in the shirt can be described similarly to the air particles, i.e., there are particles with lower energy and those with higher energy. The important bit is that some water particles have enough energy to break free from the shirt into the surroundings. This process is evaporation. From the Maxwell-Boltzmann distribution, we can already see that the evaporation chance or evaporation rate is higher at higher temperatures because more water particles have enough energy to break free. Once these high-energy particles leave the shirt, the average energy of the remaining water particles are smaller. After some bouncing around, their distribution will readjust to a Maxwell-Boltzmann distribution of lower energy. In other words, the shirt cools due to evaporation.
 
-Because the particles that can escape the shirt are high-energy particles, the temperature of the shirt will drop. The particles inside the shirt will bounce off each other and redistribute the energy arriving at a similar Maxwell distribution, but this time of lower energy. Important at this point is that the number of particles above the escape velocity has now greatly reduced. We already learnt two things:
-1) The evaporation rate is higher at higher temperatures.
-2) Clothing (and all other items) will cool down during the evaporation process.
 
-Let's look at the temperature of the shirt while drying in a bit more detail. We learned that the temperature drops whenever water evaporates from the shirt. If we only consider this effect, our shirt would lose energy non-stop and the temperature of the shirt would constantly drop. However, the surrounding air is trying to keep the shirt at the ambient temperature (in our case 20degrees C). The temperature of the shirt stabilises at the point where the energy lost from evaporation and the energy received from the surrounding air equalises. As a result, the drying shirt is always colder than its surrounding energy.
+Let's look at the temperature of the shirt while drying in a bit more detail. If we only consider this effect, our shirt would lose energy non-stop and the temperature of the shirt would constantly drop. However, the surrounding air is trying to keep the shirt at the ambient temperature (20°C for example). The temperature of the shirt stabilises at the point where the energy lost from evaporation and the energy received from the surrounding air equalises. As a result, the drying shirt is always colder than its surrounding energy. The temperature loss from evaporation can be useful for us, here are 2 ways to use the knowledge: 
+* If you are hot and want to cool down, then pouring water on your shirt will make the shirt cooler (Sweating is working the same way). 
+* In winter, it can be really hard to tell if your clothes are cold and wet or just cold (and dry). The solution is to hold the clothes against your cheeks or lips (if your cheeks are cold too). If the clothes are dry, they will quickly heat up to body temperature. If they are still wet, they are still evaporating and will not reach body temperature and will be colder.
 
-Two fun facts about this last effect: 
-* This is also how sweat cools us down by evaporating it lowers the energy of our body.
-* If you ever hang your clothes in winter and return in the evening, it is a challenge to figure out if your clothes are cold or damp and cold. To figure out if they are dry or not, you can hold them against your cheek (which hopefully is still warm). If the shirt is dry, it will quickly reach the temperature of your cheek. If the shirt is still damp, as learned, the temperature of the shirt will have a temperature lower than your cheek as it is still drying.
-
-Now that we have some understanding of the drying of clothes, we can look at the process in more detail. In particular, we want to understand what other factors besides temperature affect the drying process. Roughly speaking there are 3 effects at play:
-1) The speed at which water evaporates from the shirt. This depends on the temperature and energy that the surrounding provides. The Sun can speed up the process by providing additional energy
-2) The speed at which water vapour gets transported away from the shirt after has evaporated. This mainly depends on the level of humidity in the ambient air and wind.
-3) The movement of water inside the shirt. Water evaporates only on the surface of the shirt that is exposed to air. Depending on the  material and thickness of the shirt, it takes longer for water from the centre to reach the surface.
+Great, you did the test and your clothes are still wet, so what did you do wrong? How can you make your clothes dry faster? Roughly speaking 3 effects at play affect the drying speed of your clothes:
+1. Evaporation speed: This depends on the temperature of the surroundings. The Sun can speed up the process by providing additional energy.
+2. Diffusion speed: The speed at which water vapour gets transported away from the shirt after evaporation. This mainly depends on the relative humidity of the surroundings and *wind* is very important in this process.
+3. Water movement inside the shirt: Water evaporates only on the surface of the shirt that is exposed to air. Depending on the  material and thickness of the item, it takes longer for water from the centre to reach the surface.
 
 We don't have much control over the third effect, so we use simplifying assumptions (as physicists love to do). We assume that the shirt is very thin and basically all the water sits at the surface ready to evaporate at any time.
 
-So, I ran a couple of simulations to get some visualisation of what happens when clothing dries. But essentially, it is what is described in step 1) and 2). Water enters the air by evaporating from the shirt increasing the amount of water vapour in the air right next to the shirt. Through diffusion, the random movement of particles in air, the water vapour gets transported away from the shirt. Diffusion moves water from places with higher concentration of water to places of lower concentration. In our case, the closer we are to the shirt, the higher the concentration is. So the shirt keeps on pumping water in to the ambient which gets transported away. The amount of water in the air will be the highest right next to the shirt and drops off. This is shown in the picture below (MAYBE)
+So let's look at a couple of simulations to get a better understanding.
 
-Now there is one big limiting factor in this whole process which is the relative humidity, or more accurately, the fact that water can only hold a certain amount of water before it gets saturated and can't take anymore air. Relative humidity describes how close to fully saturated the air is with 100% being fully saturated and 0% no water present.
+# Image of simulations
 
-If the air around the shirt reaches 100% relative humidity than no more water can evaporate from the shirt. We have to wait for the water vapour in the air to move away from the shirt via diffusion. This effect is shown in the animation below. At first, the water is evaporating at a faster speed. Until the surrounding air reaches 100% relative humidity. At this point, the evaporation speed slows down as we have to wait for water in the surrounding air is diffused away. In other words, the speed of our drying process is limited by the diffusion speed. 
+Our shirt is represented by a the point in the middle. It releases water into its surroundings leading to an increase in the humidity. The additional moisture is then transported away slowly via diffusions. There are 3 different scenarios. The scenario on the left and in the middle demonstrate the impact of the relative humidity of the surrounding air. The higher the humidity, the slower moisture can be transported away. The evaporation of the shirt stops when the air right next to the shirt reaches 100% relative humidity. There is no space for further water in the air until the water is diffused away. We can see that the shirt dries slower on the left due to the higher humidity.
 
-A couple of insights and additional informatoin:
-* The speed of diffusion speed depends on the temperature of the gas, but also at the relative humidity.
-* You can think of wind as an increase in diffusion speed. The wind helps carrying the wet air away from the shirt. If you hang your shirt in front of a fan, the surrounding air will basically always have the ambient relative humidity and is not holding back evaporation.
+On the right, we simulated the effect of wind. Wind causes the water in the air around the shirt to be moved away faster. We can see that the relative humidity around the shirt does not reach 100% and the shirt can always evaporate at maximum speed.
+
+From this little simulation, we learnt that the drying speed of the cloth is limited either by the diffusion speed or the evaporation speed. If it is limited by the diffusion speed (e.g. no wind), then even increasing the evaporation speed does not help. We need to get rid of the moisture in the air. On the other hand, if the evaporation speed is limiting the drying process, then we can speed up the drying process by heating the clothes.
+
+# Image of drying speed
+
+We can see these limits clearly in the plot above where the moisture in the shirt is shown against drying time. For high humidity and the standard case, the drying process starts of in the evaporation limited regime where the drying speed only depends on the evaporation rate. Once the surrounding fills with moisture and reaches 100% relative humidity, the drying process becomes limited by diffusion. At higher ambient relative humidity this happens faster.
+
+
+If there is a strong enough wind present, we see a straight line because water is leaving the shirt at a constant rate, the evaporation rate. The wind ensures that moisture is carried away fast enough so that the surrounding air never reaches 100% relative humidity If we now additional heat the shirt, the evaporation rate increases as shown by the dotted red line. 
+
+## The Cloth Hanging Trick
+
+There is one point, we neglected so far and that is surface area. Normally, you would fold your shirt in half and hang it on the line. This cuts the surface area of the shirt exposed to air in half. If you are in the possession of clothing pegs, you can the shirt from the bottom and keep the whole surface exposed to air.
+
+I suspect that the drying speed should be proportional to the surface area exposed to air. So, after upgrading our 1D simulation to 2D, I was able to confirm this. On the right, you can see the same simulation as above, but this time in 2D. The shirt is hanged along the y-axis. On the left, I plotted the drying time against the length of the shirt while keeping all other parameters constant. First, I did this for the case with wind. We see a perfectly straight line on a log-log scale which verifies that the drying speed is proportional to 1/length. 
+
+Interestingly, for the case with no wind, at first, it looks like it is not following the 1/length line, but it does so later on. This is because of diffusion towards other y-direction. Before, water could only diffuse along the x-direction, but now we added the y-direction, so water can also diffuse in that direction. This becomes important at the border of the shirt. If the shirt is now represented by 1 point, then almost all points feel this border effect. If the shirt is represented by many points (e.g. 1000), then only a few points experience the border effect and overall it follows the 1/length case. When dealing with simulations, these border and boundary effects are always troublesome.
+
+
+So to summarise:
+* The speed of diffusion speed depends on the temperature of the air, but also on the relative humidity.
+* The wind helps carry the wet air away from the shirt.
 * It is not always the case that the diffusion speed is smaller than the evaporation speed. In this case, increasing the evaporation speed (heating the shirt) will speed up the drying process.
 
-So let's close this with a couple of insights and facts about drying your clothes:
-* On this website (https://www.conservationphysics.org/wetstuff/wetstuff01.html), you can find a cool experiment on drying clothes (It is a good verification of the insights I derived theoretically)
-* The reason why clothes shrink in the dryer is because they dry too much. Even when "dry", the fibre in our clothes have some moisture left in them. This is higher for wool than for cotton, that is why wool is a no-no for the dryer. The dryer forces the clothes to dry out beyond that causing damage to the fibre. If the dryer were to stop exactly when the clothes are dry there would be no damage. But this is difficult because different items take different times to dry.
+## Next steps
+Now this whole experiment has been very theoretical which was enough to get the insights that I wanted to get. I never told you what where the actual diffusion speeds, the temperatures or the amount of water in the shirt that needs to evaporate. I think the diffusion speed of water vapour in the air can be calculated when knowing the temperature and relative humidity of the air, but for the other numbers, we would need to run some experiments to determine them. Here is a link to a website where they did such experiments.
 
-* Sometimes, the fastest way to dry your clothes is by wearing it because your body provides a lot of energy speeding up the evaporation process (emergency solution if you need to dry something fast before a flight)
-* If you are unable to dry your swimmers before packing them chlorined pool water keeps them from smelling
-
-
-
-
-
-
-
-
-
+But you can also just look at literature and find these values. There exists a formula that estimates the drying time of your laundry given parameters such as temperature, relative humidity and wind speed. Using weather forecast data, one can calculate the hours required to dry clothes for a given day. This can even be visualised for a whole country. With an extended forecast over a whole week, we could create a map that tells the best day to dry your clothes depending on your location. This could be an exciting project to practice some geoinformatics.

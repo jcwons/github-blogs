@@ -32,7 +32,7 @@ We don't have much control over the third effect, so we use simplifying assumpti
 
 So let's look at a couple of simulations to get a better understanding.
 
-![alt text](./img/cloth_drying/simulation.gif)
+![Alt Text](./img/cloth_drying/animation.gif)
 
 
 Our shirt is represented by a the point in the middle. It releases water into its surroundings leading to an increase in the humidity. The additional moisture is then transported away slowly via diffusions. There are 3 different scenarios. The scenario on the left and in the middle demonstrate the impact of the relative humidity of the surrounding air. The higher the humidity, the slower moisture can be transported away. The evaporation of the shirt stops when the air right next to the shirt reaches 100% relative humidity. There is no space for further water in the air until the water is diffused away. We can see that the shirt dries slower on the left due to the higher humidity.
@@ -41,7 +41,7 @@ On the right, we simulated the effect of wind. Wind causes the water in the air 
 
 From this little simulation, we learnt that the drying speed of the cloth is limited either by the diffusion speed or the evaporation speed. If it is limited by the diffusion speed (e.g. no wind), then even increasing the evaporation speed does not help. We need to get rid of the moisture in the air. On the other hand, if the evaporation speed is limiting the drying process, then we can speed up the drying process by heating the clothes.
 
-# Image of drying speed
+![image](./img/cloth_drying/Moisture_in_shirt.png)
 
 We can see these limits clearly in the plot above where the moisture in the shirt is shown against drying time. For high humidity and the standard case, the drying process starts of in the evaporation limited regime where the drying speed only depends on the evaporation rate. Once the surrounding fills with moisture and reaches 100% relative humidity, the drying process becomes limited by diffusion. At higher ambient relative humidity this happens faster.
 
@@ -51,6 +51,8 @@ If there is a strong enough wind present, we see a straight line because water i
 ## The Cloth Hanging Trick
 
 There is one point, we neglected so far and that is surface area. Normally, you would fold your shirt in half and hang it on the line. This cuts the surface area of the shirt exposed to air in half. If you are in the possession of clothing pegs, you can the shirt from the bottom and keep the whole surface exposed to air.
+
+![Alt text](./img/cloth_drying/animation_2D.gif)
 
 I suspect that the drying speed should be proportional to the surface area exposed to air. So, after upgrading our 1D simulation to 2D, I was able to confirm this. On the right, you can see the same simulation as above, but this time in 2D. The shirt is hanged along the y-axis. On the left, I plotted the drying time against the length of the shirt while keeping all other parameters constant. First, I did this for the case with wind. We see a perfectly straight line on a log-log scale which verifies that the drying speed is proportional to 1/length. 
 

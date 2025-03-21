@@ -4,7 +4,7 @@ date: 2025-03-10
 ---
 
 
-## Introduction
+## Introduction 
 How long does it take for my clothes to dry outside? Actually, why are they drying when water only boils at 100°C? The answer to the second question is rather simple once you understand what temperature actually is.
 
 Let's start with temperature. To understand it better, I will introduce what is called the kinetic theory of gases. When looking at gases or fluids, we view them as an ensemble of their particles. We can imagine these particles as tiny round balls that move around and bounce off each other. The temperature of air is then given by the speed (or kinetic energy) of these particles. At higher temperatures, the particles move faster and at lower temperatures they move slower.

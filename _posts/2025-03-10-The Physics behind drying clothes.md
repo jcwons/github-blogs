@@ -41,7 +41,7 @@ On the right, we simulated the effect of wind. Wind causes the water in the air 
 
 From this little simulation, we learnt that the drying speed of the cloth is limited either by the diffusion speed or the evaporation speed. If it is limited by the diffusion speed (e.g. no wind), then even increasing the evaporation speed does not help. We need to get rid of the moisture in the air. On the other hand, if the evaporation speed is limiting the drying process, then we can speed up the drying process by heating the clothes.
 
-![image]({{ site.baseurl }}/assets/dry_cloths/Moisture_in_shirt.png)
+![image]({{ site.baseurl }}/docs/assets/dry_cloths/Moisture_in_shirt.png)
 
 We can see these limits clearly in the plot above where the moisture in the shirt is shown against drying time. For high humidity and the standard case, the drying process starts of in the evaporation limited regime where the drying speed only depends on the evaporation rate. Once the surrounding fills with moisture and reaches 100% relative humidity, the drying process becomes limited by diffusion. At higher ambient relative humidity this happens faster.
 

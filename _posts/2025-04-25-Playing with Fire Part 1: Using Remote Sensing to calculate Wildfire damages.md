@@ -1,5 +1,4 @@
 ---
-layout: default
 title: "Playing with Fire Part 1: Using Remote Sensing to calculate Wildfire damages"
 date: 2025-04-25
 ---

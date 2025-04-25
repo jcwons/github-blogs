@@ -3,6 +3,12 @@ title: "Playing with Fire Part 2: Using Satellite images and Cellular Automata t
 date: 2025-04-25
 ---
 
+<!-- Load MathJax -->
+<script type="text/javascript" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
 ## Dealing with Coordinate Reference Systems (CRS)
 
 Now for the second major headache of the project: **coordinate reference systems** (CRS). Different satellites don’t always capture Earth’s surface from the same angle, and projecting a curved globe onto a flat screen isn’t as straightforward as it sounds. As a result, satellite datasets often come in **different projections and CRS**.

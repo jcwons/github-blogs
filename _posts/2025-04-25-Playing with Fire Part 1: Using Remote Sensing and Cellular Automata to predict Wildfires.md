@@ -1,5 +1,5 @@
 ---
-title: "Playing with Fire: Using Remote Sensing and Cellular Automata to predict Wildfires Part 1"
+title: "Playing with Fire Part 1: Using Remote Sensing and Cellular Automata to predict Wildfires"
 date: 2025-04-25
 ---
 

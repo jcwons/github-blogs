@@ -9,8 +9,7 @@ date: 2025-04-25
 
 Wildfires are becoming increasingly frequent and severe — not just in traditionally fire-prone regions, but even in places like my home country Germany. Understanding how wildfires behave is crucial for mitigation and response planning. In the first part of this series, I use remote sensing data from the Sentinel-2 satellite to estimate the area affected by a wildfire. In the next blog post, I will use this data to build a "realistic" simulation that models how the fire might have spread across the landscape.
 
-> TLDR: I used Google Earth Explorer to download images from before and after the fire to calculate the Normalized Burn Ratio, which was then used to calculate burnt area. The stated area in a news article was confirmed.
-
+> TLDR: I used Google Earth Explorer to download images from before and after the fire to calculate the Normalized Burn Ratio and determine burnt area. The results were used to confirm the 95,000 ha of burnt area mentioned in a news article.
 
 ### Fire Selection and Data Collection
 
@@ -23,7 +22,7 @@ The ignition date was reported as February 3rd, 2025, and I confirmed this using
     <figcaption>Burnt area of the bushfire in Tasmania from February 2025. Image from <a href="https://www.abc.net.au/news/2025-02-18/tasmania-remote-west-bushfires-95000-hectares-burnt/104945100" target="_blank">ABC News Australia</a>.</figcaption>
 </figure>
 
-There are several platforms that host satellite data, many of which offer APIs to download data programmatically. I initially explored [NASA's Earthdata catalog](https://www.earthdata.nasa.gov/data/catalog), but ultimately settled on [Google Earth Engine](https://developers.google.com/earth-engine/datasets/catalog), as I specifically needed imagery from ESA’s Sentinel-2 satellite.
+Several platforms host satellite data, many of which offer APIs to download data programmatically. I initially explored [NASA's Earthdata catalog](https://www.earthdata.nasa.gov/data/catalog), but ultimately settled on [Google Earth Engine](https://developers.google.com/earth-engine/datasets/catalog), as I specifically needed imagery from ESA’s Sentinel-2 satellite.
 
 Sentinel-2 is great for this type of analysis: it has a high revisit frequency over Australia and provides data in 12 spectral bands at a resolution of up to 10–50 meters, which is excellent for burn scar mapping.
 
@@ -33,14 +32,14 @@ So now, it was time to “just” download the data.
 
 During my PhD, I worked extensively with another ESA satellite — the Planck Surveyor — which looked away from Earth to measure cosmic radiation. So, this blog post will cover the struggles I faced when working with Earth-facing satellites
 
-Well, probably 90% of the project was spent figuring out what data is available and how to get into a shape that I can work with. 
-Every image I downloaded seemed to arrive in a different file format, which I have not heard of until then. Learning new things usually goes through 3 stages which roughly go like this:
+Well, probably 90% of the project was spent figuring out what data is available and how to get it into a shape I can work with. 
+Every image I downloaded seemed to arrive in a different file format, which I had not heard of until then. Learning new things usually goes through 3 stages, which roughly go like this:
 
 1. “Why are they using `.hdf` files and not just `.txt` files?”
 2. “Oh... `.hdf` files are actually quite handy. Makes sense.”
 3. “WHY is this not saved as `.hdf`?!”
 
-Eventually, I managed to automate the download process via Google Earth Engine, apply cloud masks, and set up the whole data collection pipeline. Installing heaps of libraries such as gdal, xarray, rasterio, ... . Once all the functions were in place to quickly download cleaned satellite images, the rest of the project was a breeze.
+Eventually, I managed to automate the download process via Google Earth Engine, apply cloud masks, and set up the whole data collection pipeline. Installing heaps of libraries such as gdal, xarray, rasterio, etc. Once all the functions were in place to quickly download cleaned satellite images, the rest of the project was a breeze.
 
 ## Remote Sensing and Spectral Indices
 
@@ -67,7 +66,7 @@ One popular example is the **Normalized Difference Vegetation Index (NDVI)**. It
 
 ### Calculating Burnt Area with dNBR
 
-Now, we collect satellite data from before the fire and after fire. The next step is to calculate the **Normalized Burn Ratio (NBR)** before and after the fire. By comparing these two NBR images, we can pinpoint the areas affected by the fire.
+Now, we collect satellite data from before the fire and after the fire. The next step is to calculate the **Normalized Burn Ratio (NBR)** before and after the fire. By comparing these two NBR images, we can pinpoint the areas affected by the fire.
 
 In the first image below, you can see the NBR calculated just **before** the fire (left) and **after** the fire (right). You’ll notice some white patches — those are clouds. Kind of ironic: in cosmology, we launch satellites to get *above* the clouds and avoid atmospheric interference, but in remote sensing, clouds are one of our main obstacles. To reduce their impact, we can combine multiple satellite captures taken over different days to stitch together a cloud-free view. Here, we have to strike a balance between getting clean pictures and getting recent pictures.
 
@@ -90,6 +89,6 @@ The final step is to classify pixels as "burned" based on a dNBR threshold. I we
 - Filling in small internal holes
 - Smoothing the boundaries
 
-Using the cleaned-up dNBR map, we can now **estimate the total burnt area**. By counting the burned pixels and multiplying by the pixel with their resolution, we get that roughly **80.000 ha** of burnt land which aligns well with what was reported in news articles—excluding a small fire area on the right that I didn’t include in my mapping.
+Using the cleaned-up dNBR map, we can now **estimate the total burnt area**. By counting the burned pixels and multiplying by the pixel with their resolution, we get that roughly **80.000 ha** of burnt land, which aligns well with what was reported in the news article — excluding a small fire area on the right that I didn’t include in my mapping.
 
-And this is how the remote sensing can be used to calculated the area of a wildfire.
+And this is how remote sensing can be used to calculated the area of a wildfire.

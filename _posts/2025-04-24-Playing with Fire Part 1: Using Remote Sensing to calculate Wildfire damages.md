@@ -9,6 +9,8 @@ date: 2025-04-24
 
 Wildfires are becoming increasingly frequent and severe — not just in traditionally fire-prone regions, but even in places like my home country Germany. Understanding how wildfires behave is crucial for mitigation and response planning. In the first part of this series, I use remote sensing data from the Sentinel-2 satellite to estimate the area affected by a wildfire. In the next blog post, I will use this data to build a "realistic" simulation that models how the fire might have spread across the landscape.
 
+Find the code on [GitHub](https://github.com/jcwons/Wildfire-Mapping-and-Simulatoin) and the [Jupyter Notebook](https://github.com/jcwons/Wildfire-Mapping-and-Simulatoin/blob/main/blog_post_1.ipynb) of the analysis.
+
 > TLDR: I used Google Earth Explorer to download images from before and after the fire to calculate the Normalized Burn Ratio and determine burnt area. The results were used to confirm the 95,000 ha of burnt area mentioned in a news article.
 
 ### Fire Selection and Data Collection

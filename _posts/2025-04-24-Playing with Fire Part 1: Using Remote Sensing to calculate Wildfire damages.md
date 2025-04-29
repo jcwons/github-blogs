@@ -13,7 +13,7 @@ Wildfires are becoming increasingly frequent and severe — not just in traditio
 </figure>
 Find the code on [GitHub](https://github.com/jcwons/Wildfire-Mapping-and-Simulatoin) and the [Jupyter Notebook](https://github.com/jcwons/Wildfire-Mapping-and-Simulatoin/blob/main/blog_post_1.ipynb) of the analysis.
 
-## Fire Selection
+## Fire Selection 🔥
 ---
 
 For this project, I chose one of the largest wildfires of 2025 (so far): a February bushfire in remote western Tasmania, Australia, which affected nearly 100,000 hectares. I picked this fire because it was covered in a [press release](https://www.abc.net.au/news/2025-02-18/tasmania-remote-west-bushfires-95000-hectares-burnt/104945100) that included a map of the burned area, along with key metadata such as the ignition date and total area impacted. 
@@ -29,7 +29,7 @@ Several platforms host satellite data, many of which offer APIs to download data
 
 Sentinel-2 data is great for this type of analysis: it has a high revisit frequency over Australia and provides data in 12 spectral bands at a resolution of 10–50 meters, which is excellent for burn scar mapping.
 
-## Data Collection
+## Data Collection 📦
 ---
 
 So now, I “just” had to download the data.
@@ -46,7 +46,7 @@ Well, the first struggle was figuring out what data is out there, what data I ne
 
 Eventually, I overcame the initial struggles and managed to automate the download process via Google Earth Engine, apply cloud masks, and set up the whole data collection pipeline. Installing heaps of libraries such as GDAL, xarray, rasterio, etc. The rest of the project was a breeze once all the functions were in place to download cleaned satellite images quickly.
 
-## Remote Sensing and Spectral Indices
+## Remote Sensing and Spectral Indices 🛰️
 ---
 
 Now that I have the satellite data ready, we can dive into the core of the project: using **remote sensing** to detect and quantify fire damage. Here is a quick summary of what remote sensing is.
@@ -70,7 +70,7 @@ One popular example is the **Normalised Difference Vegetation Index (NDVI)**. It
     </figure>
 </div>
 
-## Calculating Burnt Area with dNBR
+## Calculating Burnt Area with dNBR 🧮
 ---
 
 Now, we collect satellite data from before the fire and after the fire. The next step is to calculate the **Normalised Burn Ratio (NBR)** before and after the fire. By comparing these two NBR images, we can pinpoint the areas affected by the fire.
@@ -96,7 +96,7 @@ The final step is to classify pixels as "burned" based on a dNBR threshold. I we
 - Filling in small internal holes
 - Smoothing the boundaries
 
-## Results
+## Results 📊
 ---
 
 Using the cleaned-up dNBR map, we can now **estimate the total burnt area**. By counting the burned pixels and multiplying by the pixel with their resolution, we get that roughly **80.000 ha** of burnt land, which aligns well with what was reported in the news article, excluding a small fire area on the right that I didn’t include in my mapping.

@@ -96,4 +96,4 @@ Using the cleaned-up dNBR map, we can now **estimate the total burnt area**. By 
 
 And this is how remote sensing can be used to calculated the area of a wildfire. Quite amazing how we used two radiations (near infrared and shortwave infrared) that are invisible to the naked eye and were able to clearly map the burnt area.
 
-
+Keep your eyes peeled for part 2, where I will build a simulation that can model the spread of the fire.

@@ -9,7 +9,7 @@ date: 2025-04-24
 
 Wildfires are becoming increasingly frequent and severe — not just in traditionally fire-prone regions, but even in places like my home country Germany. Understanding how wildfires behave is crucial for mitigation and response planning. In the first part of this series, I use remote sensing data from the Sentinel-2 satellite to estimate the area affected by a wildfire. In the next blog post, I will use this data to build a "realistic" simulation that models how the fire might have spread across the landscape.
 <figure>
-    <img src="{{ site.baseurl }}/docs/assets/bushfire/bushfire1.png" alt="NBR of the fire area before and after the fire" width=400 height=400> 
+    <img src="{{ site.baseurl }}/docs/assets/bushfire/bushfire1.png" alt="NBR of the fire area before and after the fire" width=600 style="transform: rotate(-90deg);> 
 </figure>
 Find the code on [GitHub](https://github.com/jcwons/Wildfire-Mapping-and-Simulatoin) and the [Jupyter Notebook](https://github.com/jcwons/Wildfire-Mapping-and-Simulatoin/blob/main/blog_post_1.ipynb) of the analysis.
 

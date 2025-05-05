@@ -9,93 +9,65 @@ date: 2025-05-05
 </script>
 
 
-## Dealing with Coordinate Reference Systems (CRS)
-
-Now for the second major headache of the project: **coordinate reference systems** (CRS). Different satellites don’t always capture Earth’s surface from the same angle, and projecting a curved globe onto a flat screen isn’t as straightforward as it sounds. As a result, satellite datasets often come in **different projections and CRS**.
-
-Thankfully, modern satellite data formats (like GeoTIFFs or NetCDFs) are pretty smart. They’re more than just images—they’re like Python dictionaries: each pixel value comes bundled with metadata that tells you what CRS it uses, what the spatial resolution is, and where on Earth it’s located.
-
-To make everything work together, the first step in preprocessing was to **reproject all data into a common CRS and resolution**. I wrote a function that could take in data at any CRS and spatial resolution and reproject it to match my project’s target system.
-
-In some cases, that meant **resampling**: scaling down higher-resolution imagery to match lower-resolution data, or interpolating larger pixels into smaller ones. For simplicity, I chose to reproject **everything to the coarsest resolution** available across my datasets. That way, I avoided upscaling (which adds no new information) and kept the simulation computationally light.
-
-I also opted to work in a **projected coordinate system** (instead of geographic coordinates like latitude and longitude), so all my maps and arrays were in **Cartesian coordinates**, with units in meters. This made it easier to calculate distances, areas, and apply smoothing algorithms down the line.
-
-In short, this CRS wrangling step was about **getting all geospatial layers into the same shape, resolution, and reference system**—so they could be used side by side without errors or distortions.
-
+In the second part of this series on wildfires with remote sensing, I will continue with the analysis of the massive wildfire in Tasmania, Australia. [In the first part](https://jcwons.github.io/github-blogs/2025/04/24/Playing-with-Fire-Part-1-Using-Remote-Sensing-to-calculate-Wildfire-damages.html), we collected the satellite images off the fire and calculated the area of the fire. Now, I will show you how to build a model that simulates how the fire spreads using the NDVI, elevation and wind. 
 
 ## Cellular Automaton for Modelling Wildfires
+We will be using **cellular automaton (CA)** model, which is a **semi-empirical** method. That basically means that we develop a model with parameters that are being determined by the **actual data** from part 1. If our model captures all important effects of the fire spread, then we will be able to match the data accurately.
 
-Now that we’ve got our data preprocessed and aligned, the next step is figuring out how to **simulate the spread of the fire**. There are several modelling approaches out there—ranging from physical to purely statistical—but the one that really caught my attention was the **cellular automaton (CA)** model.
-
-Why CA? Not just because it sounds cool, but because it’s a **semi-empirical** method. That means we can describe fire behavior with some basic, physics-inspired rules, and then **tune the model using actual data**. Since I’m no expert in the detailed chemistry and fluid dynamics of bushfire propagation, this seemed like the perfect fit. I’m much better at coming up with (somewhat) logical rules and translating them into mathematical models.
-
-Here’s how it works: in a cellular automaton, we divide the landscape into a grid of square **cells**, each with a fixed size \( l \). Every cell is in one of several states:
+Cellular Automata are actually easy to understand. We divide the landscape into a grid of square **cells**. Each cell can be in one of these 4 states.
 
 - **Flammable** (e.g., green vegetation)
 - **Burning**
 - **Burnt**
 - **Nonflammable** (e.g., water bodies or bare ground)
 
-At each time step, burning cells can **ignite adjacent flammable cells** with a certain probability $p_\text{burn}$. Once a cell has burned, it transitions into the burnt state and can no longer catch fire.
-
-The key is to define a good $p_\text{burn}$ function—one that might depend not just on adjacency, but on factors like **vegetation type, wind, and moisture**, which we can estimate using our satellite data.
-
-Below is a simplified schematic of the CA grid used in the simulation. Red cells are burning, green are flammable, black are already burnt, and blue are nonflammable (like water).
-
+Below there is a quick illustration of the fire cells, just that in reality, the size of the cells is much smaller than what is shown.
 <figure>
-    <img src="{{ site.baseurl }}/docs/assets/bushfire/cellular_automaton.png" alt="Simplified image of cellular automaton state" width="400">
+    <img src="{{ site.baseurl }}/docs/assets/bushfire/cellular_automaton_illustration.png" alt="Simplified image of cellular automaton state" width="600px">
     <figcaption> Simplified image of a cellular automaton state with red representing burning cells, green flammable cells, blue nonflammable cells and black burnt cells.</figcaption>
 </figure>
 
-## Modelling Fire Spread with NDVI, Wind and Slope
+###  The rules of fire spread
 
-To make the fire simulation more realistic, we need to incorporate **environmental factors** that influence how fires behave in the real world. I selected three variables that I assumed would be most impactful (without doing a deep dive into the literature): **wind**, **elevation/slope**, and **vegetation density**, which I approximated using **NDVI**.
+Next, we define the rules of how these cells change in time.
 
-- **Wind** is **time-dependent** and affects how fast and in which direction a fire spreads.  
-- **Slope** influences spread by increasing fire speed uphill and slowing it downhill.  
-- **NDVI** reflects vegetation density, with the assumption that **higher NDVI leads to faster spread**—a hypothesis we’ll revisit later.
+1) Burning cells (red) turn into burnt cells (black) after 1 time step
+2) Nonflammable cells (blue) can not catch fire, thus, they remain unchanged
+3) Burnt cells remain burnt cells
+4) All flammable cells (green) that are adjacent to burning cells can catch fire in the next time step with a probability $p_\text{burn}$.
 
-Each cell in the cellular automaton model is assigned values for these three factors. The spread of fire between neighboring cells is then determined by:
+The rules are quite simple, the tricky part is now to define a burn probability $p_\text{burn}$ that reflects the actual spread of the fire. I decided on using 3 effects, the NDVI, the slope and the wind. Together, I combine them into
 
-$$p_\text{burn} = p_0 \cdot f_\text{NDVI} \cdot f_\text{slope} \cdot f_\text{wind}$$
+### The burn probability
 
+We will work with the following probability that the fire spreads:
+
+$$p_\text{burn} = p_0 \cdot f_\text{NDVI} \cdot f_\text{slope} \cdot f_\text{wind},$$
 
 Where:  
-- `p_0` is a base ignition probability,  
-- `f_NDVI`, `f_slope`, and `f_wind` are multiplicative factors derived from the cell’s attributes.
+- $p_0$ is a base ignition probability,  
+- $f_\text{NDVI}$, $f_\text{slope}$ , and $f_\text{wind}$ are multiplicative factors derived from the cell’s attributes.
 
-The full implementation, including how directional dependencies are handled (like uphill/downhill or wind-aligned spread), is available in the [well-commented Jupyter notebook](link).
+For the NDVI, I decided to divide the flammable cells into normal and densely vegetated cells, each having its own value, i.e., $f_\text{NDVI,low}$ and $f_\text{NDVI,dense}$.
 
-### Wind, Slope and Directionality
+The slope compares the altitude of the flammable cell to the burning cell and then calculates the factor in the following way
 
-Both **wind** and **slope** have **directional effects**. That means the probability of spread isn’t the same in all directions. For instance, suppose we have a burning cell that can spread fire either left or right. If the wind is blowing to the right, `f_wind` will be greater for the right neighbor and smaller (or even suppressive) for the left. The same applies to slope—fire spreads more easily uphill and is slowed down going downhill.
+$$f_\text{slope} = e^{c_\text{slope} \cdot (\text{elevation flammable cell - elevation burning cell})}.$$
 
-This introduced a layer of complexity in the implementation since `f_wind` and `f_slope` need to be computed **relative to the direction of potential spread** rather than as fixed values per cell.
+If the flammable cell is higher than the burning cell, the chance of catching fire is increased. The parameter $c_\text{slope}$ controls how strong this effect is.
 
-### First Simulation Attempt
+Similarly, for the wind we have
+$$f_\text{wind} = e^{c_\text{wind} \cdot (\text{wind speed})},$$
+where again $c_\text{wind}$ controls how strong this effect is. For the wind speed, we also need to consider the direction. The wind speed in the equation is actually the wind speed in the direction of the fire spread. If wind is blowing from the burning cell towards the flammable cell, the burn probability is increased, if the wind is blowing the other way, the probability is reduced.
 
-Using guessed values for all parameters, I ran the first simulation. The result? A fire that **spreads too easily**. Once ignited, it continues almost endlessly unless it encounters water (blue) or designated nonflammable zones (orange/yellow).
+### Finding the right choice for the parameters
 
-Still, this was a **solid first attempt**. The fire interacts with the spatial environment, and we can already see areas where vegetation and wind conditions accelerate the burn. With some parameter tuning and the addition of other factors like **humidity, temperature**, or **vegetation type**, the model could evolve into something much more realistic.
+Now that we have set up the "physics" of how the fire is spreading, we need to determine the values for the parameters. Let's summarise all the parameters that we have:
+- $p_0$: the base ignition probability  
+- $f_\text{NDVI,low}$, $f_\text{NDVI,mid}$, $f_\text{NDVI,dense}$: the effects of the vegetation density on the fire spread.
+- $c_\text{wind}$, $c_\text{slope}$: the effects of wind and slope on the fire spread.
 
-<figure>
-    <img src="{{ site.baseurl }}/docs/assets/bushfire/fire_animation_bad.gif" alt="Simplified image of cellular automaton state" width="400">
-    <figcaption> Fire animation with guessed parameters. Green cells represent flammable cells, darker green means higher vegetation. Blue is water and yellow and orange are nonflammable cells. The timestep is in hours. The wind directions is shown in the bottom left. </figcaption>
-</figure>
-## Optimising the model
-
-The next step is to find better model parameters. The parameters are the following:
-
-- `p_0`: Base ignition probability  
-- `NDVI_low`, `NDVI_mid`, `NDVI_high`: Modifiers for ignition probability in areas with low, medium, and high NDVI  
-- `c_slope`, `c_wind`: Coefficients for how strongly slope and wind affect the spread of fire
-
-To optimise these parameters, we need to define what makes a **good simulation**. The perfect simulation reproduces the observed burn scar from satellite data, correctly predicting which pixels burned and which didn't.
-
-### Confusion Matrix
-
-We can use a **confusion matrix** to evaluate performance:
+Now, to evaluate the results of our simulation, we compare it against the actual data of the fire. We can use a **confusion matrix** to evaluate performance:
 
 |                          | **Burned in fire data (ground truth)** | **Unburned in fire data** |
 |--------------------------|----------------------------------------|----------------------------|
@@ -116,55 +88,34 @@ $$
 - The **perfect score is 1**.
 - The more incorrect predictions we make (either FP or FN), the lower the score.
 
-By varying the model parameters to **maximise the F1 score**, we can find a set of parameters that best match the observed fire behavior.
+Our goal is now to vary the model parameters to **maximise the F1 score**. This will give us the parameters that describe the underlying fire the most accurately.
 
----
-
-There are heaps of different optimisation algorithms to choose from. I used my own version of **Bayesian Optimisation**. Running a single simulation takes around **2 minutes**, and finding optimal parameters may require **100–200 iterations**. So yes, this can take a while.
-
-To speed things up, I considered:
-- Vectorising the simulation steps  
-- Updating only the cells near burning ones  
-
-But in the end, I just let the whole thing run **overnight**. Worked like a charm. Let's see how the optimised parameters perform.
-
-
-## Final Simulation Results
-
-After running the optimisation, let’s take a look at the final model parameters and the resulting simulation.
-
-One key observation is that the **overall base ignition probability (`p_0`) was reduced**. This means that, on average, fire spreads less aggressively across the landscape. The **influence of wind** on the fire spread was **significantly increased**, suggesting that the direction and strength of wind were crucial drivers of fire behavior in this case.
-
-Most surprising to me was the result for **high NDVI areas**. The model assigned a **negative contribution** to ignition probability in these regions — meaning that **densely vegetated areas were less likely to burn** than sparsely or moderately vegetated ones. At first this seemed counterintuitive, but it actually makes sense: 
-
-> Healthy, high-NDVI vegetation is typically moist and less flammable, while low to moderate NDVI may indicate **stressed, dry, or dead vegetation** — which is more prone to ignition.
-
-In the final simulation shown below, the fire spread looks **much more organic**. There are **holes** and **irregularities** in the burned area, which correspond to **natural firebreaks** like rocky outcrops, water bodies, or nonflammable ground cover. Interestingly, the real fire scar from satellite data showed similar patterns before any post-processing or smoothing.
-
-All in all, the optimised simulation captures the spatial dynamics of the fire remarkably well — a satisfying end to this modelling journey.
-
-
+During my PhD, I worked extensively on building optimisation routines, so I am excited for this step because I have been wanting to try the Python package 'Optuna' for quite a while. It uses Bayesian Optimisation to search for the best parameter set. Which is an algorithm  to search for the maximum
+### The Result
 <figure>
-    <img src="{{ site.baseurl }}/docs/assets/bushfire/fire_animation_good.gif" alt="Simplified image of cellular automaton state" width="400">
-    <figcaption> Fire animation with optimised parameters. Green cells represent flammable cells, darker green means higher vegetation. Blue is water and yellow and orange are nonflammable cells. The timestep is in hours. The wind directions is shown in the bottom left. </figcaption>
+    <img src="{{ site.baseurl }}/docs/assets/bushfire/fire_animation_final.gif" alt="Animation of the fire spread" width="300">
 </figure>
 
-## Comparing Simulation to Reality
+A surprising result from the best-fit parameters is that the probability for fire to spread towards cells with dense vegetation is lower than for less dense vegetation. I was expecting that the more vegetation, the higher the possibility of fire spreading. Turns out that a high NDVI corresponds to healthy, lush vegetation that contains a lot of water which reduces flammability. A lower NDVI, such as can indicate moisture stress, i.e, vegetation that has been dried out and is easily flammable. 
 
-Now that we have the final simulation, let’s compare it directly with the actual satellite fire scar. The image below shows the **spatial comparison** between the **burnt area predicted by the simulation** and the **observed fire scar** from satellite data.
+Let's compare the results of this simulation to the actual affected area. The image below shows the **spatial comparison** between the **burnt area predicted by the simulation** and the **observed fire scar** from satellite data.
 
 <figure>
-    <img src="{{ site.baseurl }}/docs/assets/bushfire/evaluation_result.png" alt="Simplified image of cellular automaton state" width="200">
-    <figcaption>Comparison of actual burnt area with simulated burnt area. Green represents True Positives, red False Positives, and blue False Negatives.</figcaption>
+    <img src="{{ site.baseurl }}/docs/assets/bushfire/evaluation_result.png" alt="F1 Score visualised" width="200">
 </figure>
 
 - ✅ **Green cells** represent areas that both the simulation and the satellite data marked as burnt — the **true positives**.
-- ❌ **Red cells** are **false positives** — locations where the simulation predicted fire but there was none in the satellite data.
+- ❌ **Red cells** are **false positives** — locations where the simulation predicted fire, but there was none in the satellite data.
 - 🔵 **Blue cells** show **false negatives** — areas that burnt in reality but were missed by the simulation.
+- **White cells** are **true positive** - no fire in the simulation or the satellite images.
 
-Overall, the simulation **overestimated the burnt area by about 15%**, meaning it predicted more spread than what actually occurred. However, this is a pretty strong result considering the simplicity of the model and the limited number of parameters.
+Some parts of the fire were predicted quite accurately. The simulated fire stopped roughly where it stopped in reality. However, other parts were not matched properly. This was to be expected. The real fire had several (2 or 3) ignition points, and we did not include important effects such as rain, humidity and temperature. Nonetheless, this is a pretty strong result considering the simplicity of the model and the limited number of parameters.
 
-I wasn’t entirely sure how well a **cellular automaton model** would perform, or whether the **three chosen environmental factors** (NDVI, slope, and wind) would be sufficient. But the outcome suggests that these are meaningful predictors. That said, **important additional variables** could further improve accuracy — such as:
+I would call this a success. We only considered 3 effects, and the results look decent.
+
+### Possible Improvements to the Model
+
+While the results were quite good, there are a million ways to improve on this simple model. First would be to include more/better effects into the model. Here are several factors that could be included
 
 - **Humidity**
 - **Temperature**
@@ -172,42 +123,25 @@ I wasn’t entirely sure how well a **cellular automaton model** would perform, 
 - **Vegetation moisture stress**
 - **Vegetation type**
 
-In this current version of the model, fires mostly stopped due to **unfavourable wind conditions** and **high NDVI** (dense and likely moist vegetation). Incorporating moisture-related factors explicitly would likely improve realism even further.
+In the model, fires mostly stopped due to **unfavourable wind conditions** and **high NDVI** (dense and likely moist vegetation). Incorporating moisture-related factors explicitly would likely improve realism even further. In the comparison, there are a couple of patches that didn't burn in the actual fire but almost always burnt in the simulation. That means there is some effect that was not captured.
 
+The speed of the fire spread, i.e., how much distance the fire covers per time step, is something that needs more consideration. Currently, the model spreads 1 cell (250m) per hour. We could use the VIIRS fire detection data to measure how long it took the fire to spread from the ignition point to the outer edge of the fire scar and measure the distance. From this, we could get an indicator of how fast the fire spreads.
 
+Another thing to consider is for how long the fire burns (this probably depends on the NDVI). Currently, the fire always turns off after 1 time step (1 hour). In a more realistic model, a cell would burn for longer than 1 time step with a smaller overall spread possibility. This would mean fire spreads faster if it is supported by the wind. I could spread every time step. While against the wind or without wind, it might still spread, but at a slower rate, maybe every 2-3 time steps.
 
+There are many more ways to improve, but I wanted to highlight these points above.
 
-## Reflections and Next Steps
+### Recap and Possible Application
+The final goal of such simulations would be to predict the spread of fires either while their burning or to better understand high-risk areas. To get this model to this level of robustness, we need to train it on many many wildfires. To do so, a  **catalogue of fires** — including ignition dates, burnt area masks, and fire durations — would need to be created. The results of the first blog post can be used to build a pipeline that creates this catalogue, given the ignition date and approximate burn area.
 
-Cellular automata proved to be a simple yet effective approach to modeling wildfire spread — especially when detailed knowledge of combustion processes or vegetation behavior is limited. The core logic is easy to implement, and with only a few parameters, the model produced fairly realistic results.
-
-### Improvements and Expansion
-
-The next logical step is to incorporate more environmental data, such as:
-- **Humidity**
-- **Temperature**
-- **Precipitation**
-- **Vegetation type or moisture stress**
-
-This would require additional remote sensing work and research into which parameters truly influence fire behavior, beyond NDVI alone. A more advanced model could then be tested against the same fire for comparison.
-
-Ultimately, the goal would be to build a **catalog of fires** — including ignition dates, burnt area masks, and fire durations — which can serve as training data for a more generalizable model. At the moment, the model has only been tuned to one specific fire. As a result, it likely won't generalize well to others.
-
-A more robust approach would involve using a machine learning pipeline:
+At the moment, our model is good at predicting this particular fire, but it will very likely perform much worse on other fires. To get a model that can accurately predict the spread of any fire, we need to train it on many fires. We can follow the usual machine learning methodology.:
+0. **Split** the dataset into a train and test dataset.
 1. **Train** the model on many fires.
-2. **Evaluate** on a separate test set.
-3. **Validate** whether the model generalizes well to new fire events.
+2. **Evaluate** on a separate test set of fires.
+3. **Validate** whether the model generalises well to new fire events.
 
 If successful, the model could be used to:
-- Study how **climate change** affects wildfire behavior (e.g., under hotter, drier conditions).
+- Study how **climate change** affects wildfire behaviour (e.g., under hotter, drier conditions).
 - Predict **fire paths** for use in **preventative burns** or emergency response planning.
 
-### Final Thoughts
-
-This project was a fantastic introduction to **remote sensing**. About 90% of the time was spent framing the problem and acquiring clean data. Once that was done, the fire simulation itself was implemented in just one evening.
-
-While the GUIs of Google Earth Engine and NASA Earth Data were intuitive, working with their **Python APIs** was initially challenging — but worthwhile. I can now access remote sensing datasets directly from Python, which massively improves workflow efficiency.
-
-The cellular automaton model may have worked a bit too well on this one dataset, but that’s also the beauty of semi-empirical models. I’m a big fan of combining simple, interpretable concepts — like wind, slope, and NDVI — and seeing how far they can take you with just one fitting step.
-
-This project was a proof of concept — and a fun one at that.
+Overall, I am really happy with the result of this little project. The progress was really slow in the beginning when gathering data and getting used to the different APIs. Once the data was ready, the rest went quite smoothly without any major hiccups.

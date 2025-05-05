@@ -1,6 +1,6 @@
 ---
 title: "Playing with Fire Part 2: Using Satellite images and Cellular Automata to predict Wildfire Spread"
-date: 2025-05-01
+date: 2025-05-05
 ---
 
 <!-- Load MathJax -->

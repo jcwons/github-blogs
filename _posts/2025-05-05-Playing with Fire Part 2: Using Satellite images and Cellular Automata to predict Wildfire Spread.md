@@ -3,7 +3,14 @@ title: "Playing with Fire Part 2: Using Satellite images and Cellular Automata t
 date: 2025-05-05
 ---
 
-<!-- Load MathJax -->
+<!-- Load MathJax with support for $...$ inline math -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
 <script type="text/javascript" async
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 </script>

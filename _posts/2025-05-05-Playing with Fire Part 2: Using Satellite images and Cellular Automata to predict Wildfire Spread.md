@@ -41,10 +41,10 @@ Below there is a quick illustration of the fire cells, just that in reality, the
 
 Next, we define the rules of how these cells change in time.
 
-1) Burning cells (red) turn into burnt cells (black) after 1 time step
-2) Nonflammable cells (blue) can not catch fire, thus, they remain unchanged
-3) Burnt cells remain burnt cells
-4) All flammable cells (green) that are adjacent to burning cells can catch fire in the next time step with a probability $p_\text{burn}$.
+1. Burning cells (red) turn into burnt cells (black) after 1 time step
+2. Nonflammable cells (blue) can not catch fire, thus, they remain unchanged
+3. Burnt cells remain burnt cells
+4. All flammable cells (green) that are adjacent to burning cells can catch fire in the next time step with a probability $p_\text{burn}$.
 
 The rules are quite simple, the tricky part is now to define a burn probability $p_\text{burn}$ that reflects the actual spread of the fire. I decided on using 3 effects, the NDVI, the slope and the wind. Together, I combine them into
 

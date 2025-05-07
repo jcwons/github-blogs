@@ -18,7 +18,7 @@ window.MathJax = {
 A couple of weeks ago, I put myself to the task of building a wildfire simulation that can actually describe a real fire.
 This is the second part my series on wildfires with remote sensing. I will continue with the analysis of the massive wildfire in Tasmania, Australia. [In the first part](https://jcwons.github.io/github-blogs/2025/04/24/Playing-with-Fire-Part-1-Using-Remote-Sensing-to-calculate-Wildfire-damages.html), I collected the satellite images of the fire and calculated the area of the fire. Now, I will show you how to build a model that simulates how the fire spreads using the NDVI, elevation and wind. 
 <figure>
-    <img src="{{ site.baseurl }}/docs/assets/bushfire/3D_landscape_layers.png" alt="Simplified image of cellular automaton state" width="600" height="400">
+    <img src="{{ site.baseurl }}/docs/assets/bushfire/Lego_bushfire.png" alt="Simplified image of cellular automaton state" width="600" height="400">
 </figure>
 
 ## Cellular Automaton for Modelling Wildfires 🔥

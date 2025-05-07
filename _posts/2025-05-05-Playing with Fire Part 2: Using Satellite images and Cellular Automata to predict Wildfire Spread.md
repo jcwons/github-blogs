@@ -15,8 +15,8 @@ window.MathJax = {
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 </script>
 
-A couple of weeks ago, I put myself to the task of building a wildfire simulation that can actually describe a real fire.
-This is the second part my series on wildfires with remote sensing. I will continue with the analysis of the massive wildfire in Tasmania, Australia. [In the first part](https://jcwons.github.io/github-blogs/2025/04/24/Playing-with-Fire-Part-1-Using-Remote-Sensing-to-calculate-Wildfire-damages.html), I collected the satellite images of the fire and calculated the area of the fire. Now, I will show you how to build a model that simulates how the fire spreads using the NDVI, elevation and wind. 
+A couple of weeks ago, I put myself to the test and build a wildfire simulation that can actually describe a real fire.
+This is the second part of my series on wildfires with remote sensing. I will continue with the analysis of the massive wildfire in Tasmania, Australia. [In the first part](https://jcwons.github.io/github-blogs/2025/04/24/Playing-with-Fire-Part-1-Using-Remote-Sensing-to-calculate-Wildfire-damages.html), I collected the satellite images of the fire and calculated the area of the fire. Now, I will show you how to build a model that simulates how the fire spreads using the NDVI, elevation and wind. 
 <figure>
     <img src="{{ site.baseurl }}/docs/assets/bushfire/Lego_bushfire.png" alt="Simplified image of cellular automaton state" width="600" height="400">
 </figure>
@@ -31,7 +31,7 @@ Cellular Automata are conceptually rather simple. We divide the landscape into a
 - **Burnt**
 - **Nonflammable** (e.g., water bodies or bare ground)
 
-The fire propagates through transitions between these states, based on local conditions and neighboring cells. A simple illustration is provided below — in reality, the spatial resolution is much finer than depicted here.
+The fire propagates through transitions between these states, based on local conditions and neighbouring cells. A simple illustration is provided below — in reality, the spatial resolution is much finer than depicted here.
 
 <figure>
     <img src="{{ site.baseurl }}/docs/assets/bushfire/cellular_automaton_illustration.png" alt="Simplified image of cellular automaton state" width="600px">
@@ -61,7 +61,7 @@ $$p_\text{burn} = p_0 \cdot f_\text{NDVI} \cdot f_\text{slope} \cdot f_\text{win
 
 Where:  
 - $p_0$ is a base ignition probability,  
-- $f_\text{NDVI}$ , $f_\text{slope}$ , and $f_\text{wind}$  are multiplicative factors vegetation, topography, and wind conditions, respectively.
+- $f_\text{NDVI}$ , $f_\text{slope}$ , and $f_\text{wind}$  are multiplicative factors for vegetation, topography, and wind conditions, respectively.
 
 **NDVI modifier**
 For the vegetation, I divided the flammable cells into normal and densely vegetated cells, each having its multiplicative factor, i.e., $f_\text{NDVI,low}$ and $f_\text{NDVI,dense}$.
@@ -76,7 +76,7 @@ Here, upward slopes promote fire spread, since fires tend to move more readily u
 **Wind modifier**
 The wind factor looks similar:
 $$f_\text{wind} = e^{c_\text{wind} \cdot (\text{wind speed})},$$
-where again $c_\text{wind}$ controls how strong this effect is. For the wind speed, we only consider the component to the wind in the direction of the fire spread. If wind is blowing from the burning cell towards the flammable cell, the burn probability is increased, if the wind is blowing the other way, the probability is reduced.
+where again $c_\text{wind}$ controls how strong this effect is. For the wind speed, we only consider the component of the wind in the direction of the fire spread. If wind is blowing from the burning cell towards the flammable cell, the burn probability is increased, if the wind is blowing the other way, the probability is reduced.
 
 ## Finding the Optimal Parameters 🎯
 

@@ -8,7 +8,7 @@ date: 2025-05-27
 There is a mysterious beach in Sydney that only appears every 7 years according to folklore. I saw this as the perfect opportunity to use some satellite data and play space detective. The perfect opportunity to whip out some satellite data and play space detective 🕵. Armed with the Python package [CoastSat](https://github.com/kvos/CoastSat), which automates the tracking of beach shorelines from satellite data. This is complemented with wave data from the [Manly Hydraulic Lab](https://mhl.nsw.gov.au/).
 
 <figure>
-    <img src="./img/Space_Detective.png"
+    <img src="{{ site.baseurl }}/docs/assets/tama/Space_Detective.png"
          alt="Space detective"
          width = 800>
 </figure>
@@ -33,7 +33,7 @@ To see this in action, check out this quick [YouTube Simulation](https://www.you
 ## Folklore about 1997 🤫
 Let's start with a bit of folklore. Allegedly in 1997, there was so much sand was dumped at the MacKenzie Bay that you were able to walk all the way to Bondi. I wish I could end that debate but unfortunately in 1997 there was only 1 satellite capturing publically available images, which only visited Australia once or twice per month. If it is cloudy during that time the images are useless. The best image from that time can be seen below.
 
-![Image captured from Landsat in 1997](./img/Tamarama_1997.png)
+![Image captured from Landsat in 1997]({{ site.baseurl }}/docs/assets/tama/Tamarama_1997.png)
 
 The more recent Landsat 7 and 8 or Sentinel-2 deliver higher resolution images.
 
@@ -47,7 +47,7 @@ The beach at MacKenzie Bay tends to be tiny like often less than 5m wide, so sma
 However, this also meant that I had to go through the images by hand without automation. It was one of those "faster to do it yourself" scenario where it is faster to do the classification yourself than training a model. I clicked through roughly 2000 images and found **10 instances** where there was sand at MacKenzie Beach.
 
 Below, you can see the result: I plotted the length of Tamarama Beach in yellow, and marked the periods where the mystery beach made an appearance in green.
-![Shoreline length from 1993 till 2024 at Tamarama Beach](./img/Tamarama_Coastline.png)
+![Shoreline length from 1993 till 2024 at Tamarama Beach]({{ site.baseurl }}/docs/assets/tama/Tamarama_Coastline.png)
 
 We can see that the mystery beach only appears if the beach in Tamarama is longer than 55m. This will be the first condition for the beach to appear at MacKenzies Bay to appear.
 
@@ -78,7 +78,7 @@ By combining the wave data with the shoreline lengths, I came up with a simple r
 
 Below is a timeline showing when these conditions were **not** met (blue), when they were met (white), and—highlighted in gold—when the mysterious beach actually appeared.
 
-![Image of the times conditions were not fulfilled vs appearances of the beach](./img/Final.png)
+![Image of the times conditions were not fulfilled vs appearances of the beach]({{ site.baseurl }}/docs/assets/tama/Final.png)
 
 Out of 15 times when all three conditions lined up, the beach showed up 10 times, giving us a tidy 66.6% accuracy.
 
